@@ -22,6 +22,17 @@ public class HiloClienteRegistro implements Runnable {
 
 	private Socket sc;
 	List<Pedidos> pedidos=null;
+	
+	
+	
+	public HiloClienteRegistro(Socket sc) {
+		super();
+		this.sc = sc;
+		
+	}
+
+
+
 	@Override
 	public void run() {
 		try {

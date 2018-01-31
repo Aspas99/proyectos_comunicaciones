@@ -10,7 +10,7 @@ import comunicaciones.*;
 
 public class Servidor {
 	public static void main(String[] args) {
-		try (ServerSocket serv=new ServerSocket(9000);){//se puede hace run try con recursos
+		try (ServerSocket servreco=new ServerSocket(9000);ServerSocket servregi=new ServerSocket(8000);){//se puede hace run try con recursos
 			
 			ExecutorService es=Executors.newFixedThreadPool(10); //creamos un pool
 			
@@ -18,13 +18,16 @@ public class Servidor {
 				//quedamos a la espera de una llamada 
 				System.out.println("Esperando conexion...");
 				//establecimiento de conexion	
-				Socket sc=serv.accept();
+				Socket screc=servreco.accept();
+				Socket screg=servregi .accept();
 				//se produce la conexion 
 				System.out.println("Llamada recibida");
 				
-				es.submit(new HiloCliente(sc)); //mediante el método submit se arranca 
+				es.submit(new HiloClienteRecuperacion(screc)); 
+				es.submit(new HiloClienteRegistro(screg));//mediante el método submit se arranca 
 			}//Se crea un Hilocliente para cada uno que llegue y se llama 
 		}catch (IOException ex) {
 		ex.printStackTrace();
 	}
+}
 }
