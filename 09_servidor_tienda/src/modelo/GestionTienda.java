@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +54,7 @@ public class GestionTienda extends Pedidos {
 			ResultSet rs=st.executeQuery(sql);
 		
 			while (rs.next()) {
-				fecha=LocalDateTime.parse(rs.getDate("fecha").toString());
+					
 				pedido = new Pedidos(rs.getString("producto"),rs.getInt("unidades"),rs.getString("ipCliente"),fecha);
 				pedidos.add(pedido);
 				

@@ -18,7 +18,7 @@ public class AdaptadorTabla extends AbstractTableModel {
 	@Override
 	public int getColumnCount() {
 		//Aqui incluiremos el numero de columnas de la tabla de BBDD o vista a visualizar
-		return 4;
+		return 5;
 	}
 
 	@Override
@@ -32,13 +32,15 @@ public class AdaptadorTabla extends AbstractTableModel {
 	public Object getValueAt(int arg0, int arg1) {//Indicamos el numero de fila y columna respectivamente
 		String valor="";
 		switch(arg1) {
-		case 0: valor=pedidos.get(arg0).getProducto();
+		case 0: valor=String.valueOf(pedidos.get(arg0).getIdPedido());
 			break;
-		case 1: valor=String.valueOf(pedidos.get(arg0).getUnidades());
+		case 1: valor=pedidos.get(arg0).getProducto();
 			break;
-		case 2: valor=pedidos.get(arg0).getIpcliente();
+		case 2: valor=String.valueOf(pedidos.get(arg0).getUnidades());
 			break;
-		case 3: valor=pedidos.get(arg0).getFecha().toString();
+		case 3: valor=pedidos.get(arg0).getIpcliente();
+			break;
+		case 4: valor=pedidos.get(arg0).getFecha().toString();
 		}
 		return valor; 
 		

@@ -45,6 +45,7 @@ public class HiloClienteRegistro implements Runnable {
 				for(Object ob:array) {
 					JSONObject data=(JSONObject) ob;
 					GestionTienda tienda=new GestionTienda("",0,"",null);
+					//Timestamp t=Timestamp
 					tienda.crearPedido(data.get("producto").toString(), Integer.parseInt(data.get("unidades").toString()),
 							data.get("ipCliente").toString(), LocalDateTime.parse(data.get("fecha").toString()));
 					

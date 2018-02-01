@@ -30,14 +30,13 @@ public class GestionPedidos extends Pedidos {
 		int puerto=9000;
 		List<Pedidos> pedidos=null;
 		//entrada de datos
-		try {
-			Socket sc=new Socket(ip,puerto);
+		try (Socket sc=new Socket(ip,puerto);){
 			InputStream is=sc.getInputStream();
 			OutputStream os=sc.getOutputStream();
 				
 			try(PrintStream salida = new PrintStream(os);
 					BufferedReader bf=new BufferedReader(new InputStreamReader(is));){
-				salida.println(formatearJSON(producto,unidades));//manda json con producto y unidades
+				salida.println(formatearJSON(producto,unidades).toJSONString());//manda json con producto y unidades
 				String respJSON=bf.readLine();
 				pedidos=transformarEnLista(respJSON);//recibe la lista de pedidos	
 			}
@@ -50,16 +49,14 @@ public class GestionPedidos extends Pedidos {
 	public void enviarPedido(String producto,int unidades,String ipCliente,LocalDateTime fecha) {
 		String ip="localhost";
 		int puerto=8000;		
-		try {       
-					Socket sc=new Socket(ip,puerto);
-					InputStream is=sc.getInputStream();
+		try (Socket sc=new Socket(ip,puerto);){       
+					
 					OutputStream os=sc.getOutputStream();
 					
 					this.setIpcliente(sc.getLocalAddress().toString());
 					//envio de datos es una operacion de escritura con un printstream
-					try(PrintStream salida = new PrintStream(os);
-							BufferedReader bf=new BufferedReader(new InputStreamReader (is));){		
-							salida.println(formatearJSON(producto,unidades,ipCliente,fecha));
+					try(PrintStream salida = new PrintStream(os);){		
+							salida.println(formatearJSON(producto,unidades,ipCliente,fecha).toJSONString());
 					}
 		}catch (IOException ex) {
 			ex.printStackTrace();
@@ -93,24 +90,24 @@ private List<Pedidos> transformarEnLista(String json) {
 	return pedidos;	
 }
 
-private String formatearJSON(String producto,int unidades) {
+private JSONObject formatearJSON(String producto,int unidades) {
 	
 		JSONObject ob=new JSONObject();
 		ob.put("producto",producto);
 		ob.put("unidades", unidades);
 	
-	return ob.toJSONString();
+	return ob;
 }
 
-private String formatearJSON(String producto,int unidades,String ipCliente,LocalDateTime fecha) {
+private JSONObject formatearJSON(String producto,int unidades,String ipCliente,LocalDateTime fecha) {
 	
 	JSONObject ob=new JSONObject();
 	ob.put("producto",producto);
 	ob.put("unidades", unidades);
 	ob.put("ipCliente", ipCliente);
-	ob.put("fecha", fecha);
+	ob.put("fecha", fecha.toString());
 
-return ob.toJSONString();
+return ob;
 }
 
 }

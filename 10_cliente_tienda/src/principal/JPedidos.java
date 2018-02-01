@@ -26,7 +26,7 @@ public class JPedidos extends JFrame {
 
 	/**
 	 * Launch the application.
-	 */
+	 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -38,12 +38,13 @@ public class JPedidos extends JFrame {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.
 	 */
-	public JPedidos() {
+	private JPedidos() {
+		this.setVisible(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -52,7 +53,7 @@ public class JPedidos extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblProducto = new JLabel("Producto");
-		lblProducto.setBounds(36, 29, 46, 14);
+		lblProducto.setBounds(10, 29, 72, 14);
 		contentPane.add(lblProducto);
 		
 		txtProducto = new JTextField();
@@ -61,7 +62,7 @@ public class JPedidos extends JFrame {
 		txtProducto.setColumns(10);
 		
 		JLabel lblUnidades = new JLabel("Unidades");
-		lblUnidades.setBounds(36, 68, 46, 14);
+		lblUnidades.setBounds(10, 68, 82, 14);
 		contentPane.add(lblUnidades);
 		
 		txtUnidades = new JTextField();
@@ -73,7 +74,8 @@ public class JPedidos extends JFrame {
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				LocalDateTime fecha = LocalDateTime.now();
-				DateTimeFormatter df = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+				//DateTimeFormatter df = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+				//fecha=LocalDateTime.parse(fecha.toString(), df);
 				GestionPedidos pedido=new GestionPedidos(txtProducto.getText(), Integer.parseInt(txtUnidades.getText()), 
 						"", null);
 				pedido.enviarPedido(txtProducto.getText(), Integer.parseInt(txtUnidades.getText()),pedido.getIpcliente() , fecha);
@@ -82,6 +84,24 @@ public class JPedidos extends JFrame {
 		});
 		btnGuardar.setBounds(190, 210, 89, 23);
 		contentPane.add(btnGuardar);
+		
+		JButton btnSalir = new JButton("Salir");
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				jpedidos.dispose();
+			}
+		});
+		btnSalir.setBounds(320, 25, 89, 23);
+		contentPane.add(btnSalir);
 	}
-
+	
+	public static JPedidos nuevaVentana() {
+		
+		if (jpedidos==null) {
+			jpedidos=new JPedidos();
+			
+		}
+		
+		return jpedidos;
+	}
 }
