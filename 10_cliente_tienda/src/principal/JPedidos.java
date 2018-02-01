@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.awt.event.ActionEvent;
 
 public class JPedidos extends JFrame {
@@ -71,8 +72,11 @@ public class JPedidos extends JFrame {
 		JButton btnGuardar = new JButton("Guardar");
 		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				LocalDateTime fecha = LocalDateTime.now();
+				DateTimeFormatter df = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 				GestionPedidos pedido=new GestionPedidos(txtProducto.getText(), Integer.parseInt(txtUnidades.getText()), 
-						pedido.getIpcliente(), LocalDateTime.now().parse("dd-MM-yyyy HH:mm:ss"));
+						"", null);
+				pedido.enviarPedido(txtProducto.getText(), Integer.parseInt(txtUnidades.getText()),pedido.getIpcliente() , fecha);
 						
 			}
 		});
